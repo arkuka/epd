@@ -1,0 +1,6 @@
+export const ACT_ADD_NEW_PRODUCT_LINE 				= "act_add_new_product_line"
+export const ACT_SET_PRODUCT_QTY 					= "act_set_product_qty"
+export const ACT_INIT_CHARACTOR_LIST 				= "act_init_charactor_list"
+export const ACT_UPDATE_PLANET_PRODUCT_STOCK_LIST 	= "act_update_planet_product_stock_list"
+export const ACT_INIT_FULL_PRODUCT_CATALOGUE  		= "act_init_full_product_catalogue"
+export const ACT_INIT_PLANET_LIST			  		= "act_init_full_planet_list"

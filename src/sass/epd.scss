@@ -1,0 +1,183 @@
+$bg_color_normal_alpha          :  0.80;
+$bg_color_hover_alpha_adjust    : -0.25;
+
+$bg_color_text_area             : rgba(230,080,080,$bg_color_normal_alpha);
+
+$bg_color_sub_table_head        : rgba(232,227,191,$bg_color_normal_alpha);
+
+$bg_color_l0                    : rgba(160,140,090,$bg_color_normal_alpha);
+$bg_color_l1                    : rgba(090,160,090,$bg_color_normal_alpha);
+$bg_color_l2                    : rgba(070,210,220,$bg_color_normal_alpha);
+$bg_color_l3                    : rgba(170,060,240,$bg_color_normal_alpha);
+$bg_color_l4                    : rgba(230,080,080,$bg_color_normal_alpha);
+
+$bg_color_selected_cell         : rgba(255,080,000,$bg_color_normal_alpha);
+
+$bg_color_list : $bg_color_l0, $bg_color_l1, $bg_color_l2, $bg_color_l3, $bg_color_l4;
+
+
+/////////////////////////////////////////////////
+//
+// Background color of text area
+//
+/////////////////////////////////////////////////
+
+.epd-text-area{
+    background-color:$bg_color_text_area;
+}
+
+
+/////////////////////////////////////////////////
+//
+// Background color of selected planet cell
+//
+/////////////////////////////////////////////////
+
+.epd-selected-cell {
+    background-color : $bg_color_selected_cell;
+}
+
+.ant-table-tbody > tr.ant-table-row:hover > td.epd-selected-cell {
+    background-color : #{adjust-color($bg_color_selected_cell,$alpha:$bg_color_hover_alpha_adjust)};
+}
+
+
+/////////////////////////////////////////////////
+//
+// Border color of sub-table
+//
+/////////////////////////////////////////////////
+
+.epd-sub-table-product-cell {
+  border: 1px solid black;
+  padding-left: 20px;
+} 
+
+
+
+/////////////////////////////////////////////////
+//
+// Background color of sub-table header
+//
+/////////////////////////////////////////////////
+
+.ant-table-thead > tr > th{
+    background-color : $bg_color_sub_table_head;
+}
+
+
+@mixin general-sub-table-header-background{
+    background-color    : $bg_color_sub_table_head;    
+    background-repeat   : no-repeat;
+    background-size     : 2em 2em;
+    background-position : left bottom;
+    background-opacity  : 0.5;
+    text-align          : right;
+}
+
+.ant-table-thead > tr > th.epd-product-type-pp-0001{
+    background-image    : url('http://localhost/epd/src/img/Aqueous%20Liquids.png');
+    @include general-sub-table-header-background;
+}
+
+.ant-table-thead > tr > th.epd-product-type-pp-0002{
+    background-image    : url('http://localhost/epd/src/img/Base%20Metals.png');
+    @include general-sub-table-header-background;
+}
+
+.ant-table-thead > tr > th.epd-product-type-pp-0005{
+    background-image    : url('http://localhost/epd/src/img/Noble%20Metals.png');
+    @include general-sub-table-header-background;
+}
+
+.ant-table-thead > tr > th.epd-product-type-pp-0007{
+    background-image    : url('http://localhost/epd/src/img/Heavy%20Metals.png');
+    @include general-sub-table-header-background;
+}
+
+.ant-table-thead > tr > th.epd-product-type-pp-0008{
+    background-image    : url('http://localhost/epd/src/img/Non-CS%20Crystals.png');
+    @include general-sub-table-header-background;
+}
+
+.ant-table-thead > tr > th.epd-product-type-pp-0016{
+    background-image    : url('http://localhost/epd/src/img/Coolant.png');
+    @include general-sub-table-header-background;
+}
+
+.ant-table-thead > tr > th.epd-product-type-pp-0017{
+    background-image    : url('http://localhost/epd/src/img/Precious%20Metals.png');
+    @include general-sub-table-header-background;
+}
+
+.ant-table-thead > tr > th.epd-product-type-pp-0018{
+    background-image    : url('http://localhost/epd/src/img/Robotics.png');
+    @include general-sub-table-header-background;
+}
+
+.ant-table-thead > tr > th.epd-product-type-pp-0019{
+    background-image    : url('http://localhost/epd/src/img/Toxic%20Metals.png');
+    @include general-sub-table-header-background;
+}
+
+.ant-table-thead > tr > th.epd-product-type-pp-0020{
+    background-image    : url('http://localhost/epd/src/img/Water.png');
+    @include general-sub-table-header-background;
+}
+
+.ant-table-thead > tr > th.epd-product-type-pp-0021{
+    background-image    : url('http://localhost/epd/src/img/Reactive%20Metals.png');
+    @include general-sub-table-header-background;
+}
+
+.ant-table-thead > tr > th.epd-product-type-pp-0022{
+    background-image    : url('http://localhost/epd/src/img/Electrolytes.png');
+    @include general-sub-table-header-background;
+}
+
+.ant-table-thead > tr > th.epd-product-type-pp-0023{
+    background-image    : url('http://localhost/epd/src/img/Consumer%20Electronics.png');
+    @include general-sub-table-header-background;
+}
+
+.ant-table-thead > tr > th.epd-product-type-pp-0024{
+    background-image    : url('http://localhost/epd/src/img/Mechanical%20Parts.png');
+    @include general-sub-table-header-background;
+}
+
+.ant-table-thead > tr > th.epd-product-type-pp-0025{
+    background-image    : url('http://localhost/epd/src/img/Oxygen.png');
+    @include general-sub-table-header-background;
+}
+
+.ant-table-thead > tr > th.epd-product-type-pp-0026{
+    background-image    : url('http://localhost/epd/src/img/Enriched%20Uranium.png');
+    @include general-sub-table-header-background;
+}
+
+.ant-table-thead > tr > th.epd-product-type-pp-0027{
+    background-image    : url('http://localhost/epd/src/img/Chiral%20Structures.png');
+    @include general-sub-table-header-background;
+}
+
+.ant-table-thead > tr > th.epd-product-type-pp-0028{
+    background-image    : url('http://localhost/epd/src/img/Water-Cooled%20CPU.png');
+    @include general-sub-table-header-background;
+}
+
+
+/////////////////////////////////////////////////
+//
+// Background color of sub-table cell
+//
+/////////////////////////////////////////////////
+
+@for $i from 0 through 4{
+    .epd-product-level-#{$i}{
+        background-color:#{nth($bg_color_list,$i+1)};
+    }
+
+    .ant-table-tbody > tr.ant-table-row:hover > td.epd-product-level-#{$i} {
+    background-color:#{adjust-color(nth($bg_color_list,$i+1),$alpha:$bg_color_hover_alpha_adjust)};
+    }
+}
