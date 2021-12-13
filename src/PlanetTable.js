@@ -207,6 +207,7 @@ class PlanetTable extends Component{
 							if(ta && ta.length>0){								
 								ta[0].disabled = undefined
 								ta[0].classList.remove(CLASSNAME_ANT_INPUT_DISABLED)
+								ta[0].value = ""
 							}
 						  }
 					  )
