@@ -83,7 +83,7 @@ class PlanetTable extends Component{
 					  ()=>{
 						   	axios.post('http://localhost:5001/Stock_List', this.state.m_Charactor_Info)
 						   	.then((response)=>{
-						   		if(response.data && response.data.status==HTTP_STATUS_CODE_ACCEPTED){
+						   		if(response.data && response.data.status===HTTP_STATUS_CODE_ACCEPTED){
 						   			setTimeout(axios.get('http://localhost:5001/Operation_Result?uuid='+response.data.uuid)
 						   							.then((res)=>{
 						   								/* ... */
@@ -179,7 +179,7 @@ class PlanetTable extends Component{
 
 		for (let i=0; i<this.state.m_Charactor_Info[charactorIndex].Planet_List.length; i++){
 
-			if(planetID == this.state.m_Charactor_Info[charactorIndex].Planet_List[i].Planet_ID){
+			if(planetID === this.state.m_Charactor_Info[charactorIndex].Planet_List[i].Planet_ID){
 				return i;
 			}
 		}
@@ -217,34 +217,38 @@ class PlanetTable extends Component{
 
 		__ak_debug__('PlanetTable::handleUserInput')
 
-		var items = event.target.value.match(this.state.m_RE_Base_Rule)
-		
-		if(items === null){
-			return;
-		}
-
-		if(this.state.m_Last_Selected_Cell === null){
-			return;	
-		}
-
-		/*
-		*
-		*	Prepare Action
-		*
-		*/
 		var planet_stock_list = []
 
-		items.forEach((item,index)=>{
-			var item_name 	= item.match(this.state.m_RE_Name_Rule)
-			var item_qty 	= item.match(this.state.m_RE_Qty_Rule)
-
-			if(item_name !== null && item_qty !== null){
-				planet_stock_list.push({
-					Product_Name:	item_name[0].trim(),
-					Product_Qty:	item_qty[0].trim()
-				})
+		if(event.target.value != ""){
+			var items = event.target.value.match(this.state.m_RE_Base_Rule)
+		
+			if(items === null){
+				return;
 			}
-		})
+
+			if(this.state.m_Last_Selected_Cell === null){
+				return;	
+			}
+
+			/*
+			*
+			*	Prepare Action
+			*
+			*/
+			
+
+			items.forEach((item,index)=>{
+				var item_name 	= item.match(this.state.m_RE_Name_Rule)
+				var item_qty 	= item.match(this.state.m_RE_Qty_Rule)
+
+				if(item_name !== null && item_qty !== null){
+					planet_stock_list.push({
+						Product_Name:	item_name[0].trim(),
+						Product_Qty:	item_qty[0].trim()
+					})
+				}
+			})
+		}		
 
 		/*
 		*
@@ -278,7 +282,7 @@ class PlanetTable extends Component{
 		var product_level_list = [PRODUCT_LEVEL_0, PRODUCT_LEVEL_1, PRODUCT_LEVEL_2, PRODUCT_LEVEL_3, PRODUCT_LEVEL_4];
 		for(let l=0; l<PRODUCT_LEVEL_AMOUNT; l++){
 			for(let i=0; i<this.state.m_Local_Product_Catalogue.length; i++){
-				if(this.state.m_Full_Product_Catalogue[this.state.m_Local_Product_Catalogue[i]].Product_Level==product_level_list[l]){
+				if(this.state.m_Full_Product_Catalogue[this.state.m_Local_Product_Catalogue[i]].Product_Level===product_level_list[l]){
 					subtable_cols.push({
 						title:this.state.m_Local_Product_Catalogue[i],
 						dataIndex:['Stock_List_Named',this.state.m_Local_Product_Catalogue[i]],
