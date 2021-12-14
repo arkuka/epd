@@ -83,7 +83,7 @@ function updateLocalProductCatalogue(state){
 		state.RTD.forEach(charactor=>{
 			charactor.Planet_List.forEach(planet=>{
 				planet.Stock_List.forEach(product=>{
-					if(product_catalogue_local.includes(product.Product_Name) == false){
+					if(product_catalogue_local.includes(product.Product_Name) === false){
 						product_catalogue_local.push(product.Product_Name)
 					}
 				})
@@ -103,7 +103,7 @@ export default (state = default_state,action)=>{
 			new_state.RTD.push(init_charactor(action.charactor_list[i].CharactorName,DEFAULT_PLANET_LIST_LENGTH))
 
 			for(let j=1; j<=DEFAULT_PLANET_LIST_LENGTH; j++){
-				let k = (j==DEFAULT_PLANET_LIST_LENGTH)?'V':j
+				let k = (j===DEFAULT_PLANET_LIST_LENGTH)?'V':j
 				new_state.RTD[i].Planet_List[j-1].Planet_ID = action.charactor_list[i]['PlanetID_'+k]
 			}
 		}

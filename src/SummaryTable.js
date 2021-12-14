@@ -71,7 +71,7 @@ class SummaryTable extends Component{
 			Product_Stock_List 	: sum_product_stock_list
 		})
 
-		console.log("product_stock_list=",product_stock_list)
+		/*console.log("product_stock_list=",product_stock_list)*/
 
 		this.setState({
 			m_Product_Stock_List : product_stock_list
