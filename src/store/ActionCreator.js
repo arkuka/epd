@@ -1,4 +1,4 @@
-import { ACT_ADD_NEW_PRODUCT_LINE, ACT_INIT_CHARACTOR_LIST, ACT_INIT_FULL_PRODUCT_CATALOGUE, ACT_UPDATE_PLANET_PRODUCT_STOCK_LIST, ACT_INIT_PLANET_LIST } from './ActionTypes'
+import { ACT_INIT_FORMULA_LIST, ACT_ADD_NEW_PRODUCT_LINE, ACT_INIT_CHARACTOR_LIST, ACT_INIT_FULL_PRODUCT_CATALOGUE, ACT_UPDATE_PLANET_PRODUCT_STOCK_LIST, ACT_INIT_PLANET_LIST } from './ActionTypes'
 
 export const Get_Act_Add_New_Product_Line = ()=>{
 	return {
@@ -41,5 +41,12 @@ export const Get_Act_Init_Planet_List = (planet_list)=>{
 	return {
 		type:ACT_INIT_PLANET_LIST,
 		planet_list
+	}
+}
+
+export const Get_Act_Init_Formula_List = (formula_list)=>{
+	return{
+		type:ACT_INIT_FORMULA_LIST,
+		formula_list
 	}
 }

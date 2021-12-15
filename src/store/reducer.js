@@ -1,4 +1,4 @@
-import { ACT_INIT_CHARACTOR_LIST, ACT_INIT_FULL_PRODUCT_CATALOGUE, ACT_UPDATE_PLANET_PRODUCT_STOCK_LIST, ACT_INIT_PLANET_LIST } from './ActionTypes'
+import { ACT_INIT_CHARACTOR_LIST, ACT_INIT_FULL_PRODUCT_CATALOGUE, ACT_UPDATE_PLANET_PRODUCT_STOCK_LIST, ACT_INIT_PLANET_LIST, ACT_INIT_FORMULA_LIST } from './ActionTypes'
 import { DEFAULT_LINE_AMOUNT, DEFAULT_STOCK_TYPE_AMOUNT, DEFAULT_PLANET_LIST_LENGTH } from '../Misc/StaticVariables'
 
 function get_empty_line_list(line_number = DEFAULT_LINE_AMOUNT){
@@ -63,7 +63,8 @@ var default_state = {
 	],
 	FPC:[],
 	LPC:[],
-	PLL:[]
+	PLL:[],
+	FOL:[]
 }
 
 function rebuildNamedStockList(stock_list){
@@ -140,5 +141,14 @@ export default (state = default_state,action)=>{
 		return new_state
 
 	}
+
+	if(action.type === ACT_INIT_FORMULA_LIST){
+		var new_state = JSON.parse(JSON.stringify(state))
+		console.log('reducer.js; FOL =', action.formula_list)
+		new_state.FOL = action.formula_list
+		console.log('reducer.js; new_state.FOL =', new_state.FOL)
+		return new_state
+	}
+
 	return state
 }
