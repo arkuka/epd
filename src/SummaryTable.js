@@ -117,18 +117,23 @@ class SummaryTable extends Component{
 			}
 		]
 
+	var product_level_list = [PRODUCT_LEVEL_0, PRODUCT_LEVEL_1, PRODUCT_LEVEL_2, PRODUCT_LEVEL_3, PRODUCT_LEVEL_4];
+	for(let l=0; l<PRODUCT_LEVEL_AMOUNT; l++){
 		for(let i=0; i<this.state.m_Local_Product_Catalogue.length; i++){
-			this.m_Columns_Summary.push({
-				title		: this.state.m_Local_Product_Catalogue[i],
-				dataIndex	: ["Product_Stock_List",this.state.m_Local_Product_Catalogue[i]],
-				className 	: this.getClassNameByProductType(this.state.m_Full_Product_Catalogue[this.state.m_Local_Product_Catalogue[i]].Product_Type),
-				onCell:(product_record,product_rowIndex)=>{
-					return {
-								className:this.getClassNameByProductLevel(this.state.m_Full_Product_Catalogue[this.state.m_Local_Product_Catalogue[i]].Product_Level)
-						   }
-					}
-			})
+			if(this.state.m_Full_Product_Catalogue[this.state.m_Local_Product_Catalogue[i]].Product_Level===product_level_list[l]){
+				this.m_Columns_Summary.push({
+					title		: this.state.m_Local_Product_Catalogue[i],
+					dataIndex	: ["Product_Stock_List",this.state.m_Local_Product_Catalogue[i]],
+					className 	: this.getClassNameByProductType(this.state.m_Full_Product_Catalogue[this.state.m_Local_Product_Catalogue[i]].Product_Type),
+					onCell:(product_record,product_rowIndex)=>{
+						return {
+									className:this.getClassNameByProductLevel(this.state.m_Full_Product_Catalogue[this.state.m_Local_Product_Catalogue[i]].Product_Level)
+							   }
+						}
+				})
+			}
 		}
+	}
 
 		return(
 			<Fragment>
