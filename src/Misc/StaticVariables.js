@@ -13,6 +13,7 @@ export const DEFAULT_VOLUME_PER_UNIT_P2 = 1.50;
 export const DEFAULT_VOLUME_PER_UNIT_P3 = 6.00;
 export const DEFAULT_VOLUME_PER_UNIT_P4 = 100.00;
 export const DEFAULT_VOLUME_PER_UNIT_NA = 0;
+export const PLANET_LAUNCHPAD_CAPACITY = 10000; //10000 M3
 
 
 export const PRODUCT_LEVEL_0 = 'P0';

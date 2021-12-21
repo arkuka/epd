@@ -1,5 +1,31 @@
 import { ACT_INIT_CHARACTOR_LIST, ACT_INIT_FULL_PRODUCT_CATALOGUE, ACT_UPDATE_PLANET_PRODUCT_STOCK_LIST, ACT_INIT_PLANET_LIST, ACT_INIT_FORMULA_LIST } from './ActionTypes'
 import { DEFAULT_LINE_AMOUNT, DEFAULT_STOCK_TYPE_AMOUNT, DEFAULT_PLANET_LIST_LENGTH } from '../Misc/StaticVariables'
+import { PLANET_LAUNCHPAD_CAPACITY } from '../Misc/StaticVariables'
+import { DEFAULT_VOLUME_PER_UNIT_P0, DEFAULT_VOLUME_PER_UNIT_P1, DEFAULT_VOLUME_PER_UNIT_P2, DEFAULT_VOLUME_PER_UNIT_P3, DEFAULT_VOLUME_PER_UNIT_P4, DEFAULT_VOLUME_PER_UNIT_NA } from '../Misc/StaticVariables'
+import { PRODUCT_LEVEL_0, PRODUCT_LEVEL_1, PRODUCT_LEVEL_2, PRODUCT_LEVEL_3, PRODUCT_LEVEL_4, PRODUCT_LEVEL_AMOUNT } from '../Misc/StaticVariables'
+
+function getProductVolumePerUnit(productLevel){
+
+	switch(productLevel){
+		case PRODUCT_LEVEL_0:
+			return DEFAULT_VOLUME_PER_UNIT_P0;
+
+		case PRODUCT_LEVEL_1:
+			return DEFAULT_VOLUME_PER_UNIT_P1;
+
+		case PRODUCT_LEVEL_2:
+			return DEFAULT_VOLUME_PER_UNIT_P2;
+
+		case PRODUCT_LEVEL_3:
+			return DEFAULT_VOLUME_PER_UNIT_P3;
+
+		case PRODUCT_LEVEL_4:
+			return DEFAULT_VOLUME_PER_UNIT_P4;
+
+		default:
+			return DEFAULT_VOLUME_PER_UNIT_NA;
+	}
+}
 
 function get_empty_line_list(line_number = DEFAULT_LINE_AMOUNT){
 
@@ -37,7 +63,9 @@ function get_empty_planet(){
 			Line_List:[],
 			Stock_List:[],
 			Line_List_Named:[],
-			Stock_List_Named:[]
+			Stock_List_Named:[],
+			Short_Product_List:[],
+			Redundant_Product_List:[]
 	}
 }
 
@@ -95,6 +123,45 @@ function updateLocalProductCatalogue(state){
 	}
 
 
+function getProductLevel(state, product){
+
+	return state.FPC[product.Product_Name].Product_Level
+
+}
+
+function recalculatePlanetLaunchpadOccupied(state){
+	for(let charactor of state.RTD){
+		for(let planet of charactor.Planet_List){
+			calculatePlanetLaunchpadOccupied(state,planet)
+		}
+	}
+}
+
+function calculatePlanetLaunchpadOccupied(state,planet){
+	let capacityUsed = 0
+
+	for(let product of planet.Stock_List){
+		capacityUsed += getProductVolumePerUnit(getProductLevel(state,product))*product.Product_Qty
+	}
+	console.log('capacityUsed =',capacityUsed)
+	return capacityUsed
+}
+
+function recalculateShortAndRedundantProductList(state){
+
+	for(let charactor of state.RTD){
+		for(let planet of charactor.Planet_List){
+			calculateShortAndRedundantProductList(state,planet)
+		}
+	}
+}
+
+function calculateShortAndRedundantProductList(state,planet){
+	return {
+		Short_Product_List:[],
+		Redundant_Product_List:[]
+	}
+}
 export default (state = default_state,action)=>{
 	if(action.type === ACT_INIT_CHARACTOR_LIST){
 		var new_state = JSON.parse(JSON.stringify(state))
@@ -138,6 +205,8 @@ export default (state = default_state,action)=>{
 		new_state.RTD[action.charactor_index].Planet_List[action.planet_index].Stock_List=action.product_stock_list
 		new_state.RTD[action.charactor_index].Planet_List[action.planet_index].Stock_List_Named=rebuildNamedStockList(action.product_stock_list)
 		updateLocalProductCatalogue(new_state)
+		recalculateShortAndRedundantProductList(new_state)
+		recalculatePlanetLaunchpadOccupied(new_state)		
 		return new_state
 
 	}
