@@ -143,10 +143,8 @@ export default (state = default_state,action)=>{
 	}
 
 	if(action.type === ACT_INIT_FORMULA_LIST){
-		var new_state = JSON.parse(JSON.stringify(state))
-		console.log('reducer.js; FOL =', action.formula_list)
-		new_state.FOL = action.formula_list
-		console.log('reducer.js; new_state.FOL =', new_state.FOL)
+		var new_state = JSON.parse(JSON.stringify(state))		
+		new_state.FOL = action.formula_list		
 		return new_state
 	}
 

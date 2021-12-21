@@ -204,7 +204,7 @@ class PlanetTable extends Component{
 					  ()=>{
 							this.state.m_Last_Selected_Cell.classList.add(CLASSNAME_SELECTED_CELL)
 							var ta = document.getElementsByTagName("TextArea")
-							if(ta && ta.length>0){								
+							if(ta && ta.length>0){
 								ta[0].disabled = undefined
 								ta[0].classList.remove(CLASSNAME_ANT_INPUT_DISABLED)
 								ta[0].value = ""

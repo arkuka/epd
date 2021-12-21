@@ -54,7 +54,7 @@ class SummaryTable extends Component{
 			})
 
 			ch.Planet_List.forEach((pl,pl_index)=>{
-				pl.Stock_List.forEach((pr, pr_index)=>{					
+				pl.Stock_List.forEach((pr, pr_index)=>{
 					invidual_product_stock_list[pr.Product_Name]	= invidual_product_stock_list[pr.Product_Name]+parseFloat(pr.Product_Qty)
 					sum_product_stock_list[pr.Product_Name]			= sum_product_stock_list[pr.Product_Name]+parseFloat(pr.Product_Qty)
 				})
@@ -105,7 +105,7 @@ class SummaryTable extends Component{
 		}
 	}
 
-	m_Columns_Summary=[];	
+	m_Columns_Summary=[];
 
 	render(){
 		
@@ -118,7 +118,6 @@ class SummaryTable extends Component{
 		]
 
 		for(let i=0; i<this.state.m_Local_Product_Catalogue.length; i++){
-			console.log("this.state.m_Local_Product_Catalogue[",i,"]=",this.state.m_Local_Product_Catalogue[i])
 			this.m_Columns_Summary.push({
 				title		: this.state.m_Local_Product_Catalogue[i],
 				dataIndex	: ["Product_Stock_List",this.state.m_Local_Product_Catalogue[i]],
@@ -129,14 +128,7 @@ class SummaryTable extends Component{
 						   }
 					}
 			})
-			console.log("this.m_Columns_Summary=", this.m_Columns_Summary)
-			console.log("this.state.m_Product_Stock_List",this.state.m_Product_Stock_List)
 		}
-
-		/*this.m_Columns_Summary.push({
-			title		: "Sum",
-			dataIndex	
-		})*/
 
 		return(
 			<Fragment>
