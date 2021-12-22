@@ -138,13 +138,14 @@ function recalculatePlanetLaunchpadOccupied(state){
 }
 
 function calculatePlanetLaunchpadOccupied(state,planet){
-	let capacityUsed = 0
+	let occupied = 0
 
 	for(let product of planet.Stock_List){
-		capacityUsed += getProductVolumePerUnit(getProductLevel(state,product))*product.Product_Qty
+		console.log(getProductVolumePerUnit(getProductLevel(state,product)),"*",product.Product_Qty)
+		occupied += getProductVolumePerUnit(getProductLevel(state,product))*product.Product_Qty
 	}
-	console.log('capacityUsed =',capacityUsed)
-	return capacityUsed
+	console.log('occupied =',occupied)
+	return occupied
 }
 
 function recalculateShortAndRedundantProductList(state){
