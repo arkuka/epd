@@ -274,9 +274,11 @@ class PlanetTable extends Component{
 			title:'Planet'	,
 			dataIndex: 'Planet_ID',
 			className: CLASSNAME_SUB_TABLE_PRODUCT_CELL,
-			/*onCell:(planet_record, planet_rowIndex)=>{
-				return 
-			}*/
+			onCell:(planet_record, planet_rowIndex)=>{				
+				return {
+					className:'sub-table-planet-cell-'+planet_record.Launchpad_Occupy_Percentage
+				}
+			}
 		})
 
 		var product_level_list = [PRODUCT_LEVEL_0, PRODUCT_LEVEL_1, PRODUCT_LEVEL_2, PRODUCT_LEVEL_3, PRODUCT_LEVEL_4];

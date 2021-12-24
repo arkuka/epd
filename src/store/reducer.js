@@ -60,6 +60,7 @@ function get_empty_planet(){
 
 	return{
 			Planet_ID:"PID",
+			Launchpad_Occupy_Percentage:0,
 			Line_List:[],
 			Stock_List:[],
 			Line_List_Named:[],
@@ -132,7 +133,7 @@ function getProductLevel(state, product){
 function recalculatePlanetLaunchpadOccupied(state){
 	for(let charactor of state.RTD){
 		for(let planet of charactor.Planet_List){
-			calculatePlanetLaunchpadOccupied(state,planet)
+			planet.Launchpad_Occupy_Percentage = calculatePlanetLaunchpadOccupied(state,planet)
 		}
 	}
 }
@@ -144,7 +145,9 @@ function calculatePlanetLaunchpadOccupied(state,planet){
 		console.log(getProductVolumePerUnit(getProductLevel(state,product)),"*",product.Product_Qty)
 		occupied += getProductVolumePerUnit(getProductLevel(state,product))*product.Product_Qty
 	}
-	console.log('occupied =',occupied)
+	occupied = occupied / PLANET_LAUNCHPAD_CAPACITY
+	occupied = parseInt(occupied*100)
+	console.log('occupied = ', occupied)
 	return occupied
 }
 
@@ -163,6 +166,7 @@ function calculateShortAndRedundantProductList(state,planet){
 		Redundant_Product_List:[]
 	}
 }
+
 export default (state = default_state,action)=>{
 	if(action.type === ACT_INIT_CHARACTOR_LIST){
 		var new_state = JSON.parse(JSON.stringify(state))
