@@ -60,11 +60,9 @@ $bg_color_list : $bg_color_l0, $bg_color_l1, $bg_color_l2, $bg_color_l3, $bg_col
 //
 /////////////////////////////////////////////////
 
-$bg_color_sub_table_planet_cell : rgba(255,0,0,1);
-
 @for $p from 1 through 100 {
     .sub-table-planet-cell-#{$p} {
-    background-color    : rgba(255,0,0,$p/100);
+    background-color    : rgba(0,0,255-$p,$p/100);
   }    
 }
 
