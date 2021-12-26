@@ -61,8 +61,11 @@ $bg_color_list : $bg_color_l0, $bg_color_l1, $bg_color_l2, $bg_color_l3, $bg_col
 /////////////////////////////////////////////////
 
 @for $p from 1 through 100 {
-    .sub-table-planet-cell-#{$p} {
-    background-color    : rgba(0,0,255-$p,$p/100);
+    .sub-table-planet-cell-#{$p} {    
+    background: linear-gradient(to right, rgba(0,0,255-$p,$p/100) 1%*$p, white 1-1%*$p)
+  }    
+  .ant-table-tbody > tr.ant-table-row:hover > td.sub-table-planet-cell-#{$p} {    
+    background: linear-gradient(to right, rgba(50,0,255-$p,$p/100) 1%*$p, rgba(200,255,255,1) 1-1%*$p)
   }    
 }
 
