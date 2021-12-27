@@ -124,11 +124,8 @@ function updateLocalProductCatalogue(state){
 	}
 
 
-function getProductLevel(state, product){
-
-	console.log('getProductLevel product=',product)
+function getProductLevel(state, product){	
 	return state.FPC[product.Product_Name].Product_Level
-
 }
 
 function recalculatePlanetLaunchpadOccupied(state){
@@ -142,8 +139,7 @@ function recalculatePlanetLaunchpadOccupied(state){
 function calculatePlanetLaunchpadOccupied(state,planet){
 	let occupied = 0
 
-	for(let product of planet.Stock_List){
-		console.log(getProductVolumePerUnit(getProductLevel(state,product)),"*",product.Product_Qty)
+	for(let product of planet.Stock_List){		
 		occupied += getProductVolumePerUnit(getProductLevel(state,product))*product.Product_Qty
 	}
 	occupied = occupied / PLANET_LAUNCHPAD_CAPACITY
