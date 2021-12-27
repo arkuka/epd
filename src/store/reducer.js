@@ -126,6 +126,7 @@ function updateLocalProductCatalogue(state){
 
 function getProductLevel(state, product){
 
+	console.log('getProductLevel product=',product)
 	return state.FPC[product.Product_Name].Product_Level
 
 }
@@ -161,10 +162,22 @@ function recalculateShortAndRedundantProductList(state){
 }
 
 function calculateShortAndRedundantProductList(state,planet){
-	return {
+	var ret = {
 		Short_Product_List:[],
 		Redundant_Product_List:[]
 	}
+
+	/*for(let product of planet.Stock_List){
+		ret.Short_Product_List.push(product);
+		ret.Redundant_Product_List.push(product);
+		consume(ret)
+	}*/
+
+	return ret;	
+}
+
+function consume(resource){
+	
 }
 
 export default (state = default_state,action)=>{
