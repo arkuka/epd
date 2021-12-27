@@ -39,6 +39,8 @@ class PlanetTable extends Component{
 	constructor(props){
 		super(props);
 
+		this.keyDownList						= []
+
 		this.renderSubTables 					= this.renderSubTables.bind(this)
 		this.expandedRowRender_L2_Line_List 	= this.expandedRowRender_L2_Line_List.bind(this)
 		this.expandedRowRender_L2_Stock_List 	= this.expandedRowRender_L2_Stock_List.bind(this)
@@ -55,6 +57,9 @@ class PlanetTable extends Component{
 		this.getProductVolumePerUnit			= this.getProductVolumePerUnit.bind(this)
 		this.getClassNameByProductLevel			= this.getClassNameByProductLevel.bind(this)
 		this.getClassNameByProductType			= this.getClassNameByProductType.bind(this)
+
+		this.handleSubTableKeyDown				= this.handleSubTableKeyDown.bind(this)
+		this.handleSubTableKeyUp				= this.handleSubTableKeyUp.bind(this)
 
 		this.state = {
 			m_Charactor_Info:			store.getState().RTD,
@@ -262,6 +267,24 @@ class PlanetTable extends Component{
 		store.dispatch(action)
 	}
 
+	handleSubTableKeyDown(event){
+		if(event.key==="Control"){
+			this.keyDownList[0]="Control"
+		}
+
+		if(this.keyDownList[0]==="Control" && (event.key==="v" || event.key==="V")){
+			navigator.clipboard.readText().then(text=>{console.log(text)})
+		}		
+	}
+
+	handleSubTableKeyUp(event){
+		if(event.key==="Control"){
+			this.keyDownList[0]=""
+		}else if(event.key==="v" || event.key==="V"){
+			this.keyDownList[1]=""
+		}
+	}
+
 	renderSubTables(record, rowIndex){
 
 		__ak_debug__('PlanetTable::renderSubTables')
@@ -275,8 +298,16 @@ class PlanetTable extends Component{
 			dataIndex: 'Planet_ID',
 			className: CLASSNAME_SUB_TABLE_PRODUCT_CELL,
 			onCell:(planet_record, planet_rowIndex)=>{				
-				return {
-					className:'sub-table-planet-cell-'+planet_record.Launchpad_Occupy_Percentage
+				return {					
+					className:'sub-table-planet-cell-'+planet_record.Launchpad_Occupy_Percentage,
+					onKey: event=>{console.log('subtable.onkey')},
+					onInput: event=>{console.log('subtable.oninput')},
+					onClick: event => {console.log('subtable.onclick')}, // click row
+					onDbClick: event => {console.log('subtable.ondbclick')}, // click row
+					tabIndex: "0",
+					onKeyDown: this.handleSubTableKeyDown,
+					onKeyUp: this.handleSubTableKeyUp,
+
 				}
 			}
 		})
