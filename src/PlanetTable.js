@@ -41,6 +41,8 @@ class PlanetTable extends Component{
 
 		this.keyDownList						= []
 
+		this.__handleUserInput	 				= this.__handleUserInput.bind(this)
+
 		this.renderSubTables 					= this.renderSubTables.bind(this)
 		this.expandedRowRender_L2_Line_List 	= this.expandedRowRender_L2_Line_List.bind(this)
 		this.expandedRowRender_L2_Stock_List 	= this.expandedRowRender_L2_Stock_List.bind(this)
@@ -219,13 +221,17 @@ class PlanetTable extends Component{
 	}
 
 	handleUserInput(event){
+		this.__handleUserInput(event.target.value)
+	}
 
-		__ak_debug__('PlanetTable::handleUserInput')
+	__handleUserInput(value){
+
+		__ak_debug__('PlanetTable::__handleUserInput')
 
 		var planet_stock_list = []
 
-		if(event.target.value != ""){
-			var items = event.target.value.match(this.state.m_RE_Base_Rule)
+		if(value != ""){
+			var items = value.match(this.state.m_RE_Base_Rule)
 		
 			if(items === null){
 				return;
@@ -273,7 +279,7 @@ class PlanetTable extends Component{
 		}
 
 		if(this.keyDownList[0]==="Control" && (event.key==="v" || event.key==="V")){
-			navigator.clipboard.readText().then(text=>{console.log(text)})
+			navigator.clipboard.readText().then(text=>{this.__handleUserInput(text)})
 		}		
 	}
 
@@ -382,44 +388,48 @@ class PlanetTable extends Component{
 		},
 		{
 			title:'Planet-A',
-			dataIndex:["Planet_List","0","Planet_ID"]
+			dataIndex:["Planet_List","0","Planet_ID"],
 		},
 		{
 			title:'Planet-B',
-			dataIndex:["Planet_List","1","Planet_ID"]
+			dataIndex:["Planet_List","1","Planet_ID"],
 		},
 		{
 			title:'Planet-C',
-			dataIndex:["Planet_List","2","Planet_ID"]
+			dataIndex:["Planet_List","2","Planet_ID"],
 		},
 		{
 			title:'Planet-D',
-			dataIndex:["Planet_List","3","Planet_ID"]
+			dataIndex:["Planet_List","3","Planet_ID"],
 		},
 		{
 			title:'Planet-E',
-			dataIndex:["Planet_List","4","Planet_ID"]
+			dataIndex:["Planet_List","4","Planet_ID"],
 		},
 		{
 			title:'Planet-F',
-			dataIndex:["Planet_List","5","Planet_ID"]
+			dataIndex:["Planet_List","5","Planet_ID"],
 		}
-	];	
+	];
+
+	
 
 	render(){
 
+		// add hot key function here
+		for(let i=1; i<this.m_Columns_Charactor_List.length; i++){
+			this.m_Columns_Charactor_List[i].onCell = (planet_record, planet_rowIndex)=>{				
+						return {
+							tabIndex: "0",
+							onKeyDown: this.handleSubTableKeyDown,
+							onKeyUp: this.handleSubTableKeyUp
+						}
+					}
+		}
+
 		return (
 			<Fragment>
-
-			<TextArea
-				disabled='true'
-				className='epd-text-area'
-				placeholder="Please paste product list here!"
-				style={{width:'450px', height:'200px', margin:'20px'}}
-				onChange = {(event)=>this.handleUserInput(event)}/>
-
-			<br/>
-
+			
 			<Table
 				dataSource={this.state.m_Charactor_Info}
 				columns={this.m_Columns_Charactor_List} 

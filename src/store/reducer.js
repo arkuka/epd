@@ -147,8 +147,7 @@ function calculatePlanetLaunchpadOccupied(state,planet){
 		occupied += getProductVolumePerUnit(getProductLevel(state,product))*product.Product_Qty
 	}
 	occupied = occupied / PLANET_LAUNCHPAD_CAPACITY
-	occupied = parseInt(occupied*100)
-	console.log('occupied = ', occupied)
+	occupied = parseInt(occupied*100)	
 	return occupied
 }
 
