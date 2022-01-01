@@ -23,6 +23,8 @@ export const PRODUCT_LEVEL_3 = 'P3';
 export const PRODUCT_LEVEL_4 = 'P4';
 export const PRODUCT_LEVEL_AMOUNT = 5;
 
+export const PRODUCT_TYPE_NA = "PP-XXXX";
+
 export const CLASSNAME_PRODUCT_LEVEL_0 = 'epd-product-level-0';
 export const CLASSNAME_PRODUCT_LEVEL_1 = 'epd-product-level-1';
 export const CLASSNAME_PRODUCT_LEVEL_2 = 'epd-product-level-2';
