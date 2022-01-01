@@ -1,6 +1,7 @@
 import { ACT_INIT_CHARACTOR_LIST, ACT_INIT_FULL_PRODUCT_CATALOGUE, ACT_UPDATE_PLANET_PRODUCT_STOCK_LIST, ACT_INIT_PLANET_LIST, ACT_INIT_FORMULA_LIST } from './ActionTypes'
 import { DEFAULT_LINE_AMOUNT, DEFAULT_STOCK_TYPE_AMOUNT, DEFAULT_PLANET_LIST_LENGTH } from '../Misc/StaticVariables'
 import { PLANET_LAUNCHPAD_CAPACITY } from '../Misc/StaticVariables'
+import { PRODUCT_TYPE_NA } from '../Misc/StaticVariables'
 import { DEFAULT_VOLUME_PER_UNIT_P0, DEFAULT_VOLUME_PER_UNIT_P1, DEFAULT_VOLUME_PER_UNIT_P2, DEFAULT_VOLUME_PER_UNIT_P3, DEFAULT_VOLUME_PER_UNIT_P4, DEFAULT_VOLUME_PER_UNIT_NA } from '../Misc/StaticVariables'
 import { PRODUCT_LEVEL_0, PRODUCT_LEVEL_1, PRODUCT_LEVEL_2, PRODUCT_LEVEL_3, PRODUCT_LEVEL_4, PRODUCT_LEVEL_AMOUNT } from '../Misc/StaticVariables'
 
@@ -90,10 +91,11 @@ var default_state = {
 		init_charactor('Xiaowei',5),
 		init_charactor('Veronic',6)
 	],
-	FPC:[],
-	LPC:[],
-	PLL:[],
-	FOL:[]
+	FPC:[],		// Full Product Catalogue
+	LPC:[],		// Local Product Catalogue
+	PLL:[],		// Planet List
+	FOL:[],		// Formula List
+	FPC_T2L:[]	// Full Product Catalogue - Type to Level
 }
 
 function rebuildNamedStockList(stock_list){
@@ -139,7 +141,7 @@ function recalculatePlanetLaunchpadOccupied(state){
 function calculatePlanetLaunchpadOccupied(state,planet){
 	let occupied = 0
 
-	for(let product of planet.Stock_List){		
+	for(let product of planet.Stock_List){
 		occupied += getProductVolumePerUnit(getProductLevel(state,product))*product.Product_Qty
 	}
 	occupied = occupied / PLANET_LAUNCHPAD_CAPACITY
@@ -157,9 +159,26 @@ function recalculateShortAndRedundantProductList(state){
 }
 
 function calculateShortAndRedundantProductList(state,planet){
+	if(planet.Stock_List.length===0){
+		return
+	}
+
 	var ret = {
 		Short_Product_List:[],
-		Redundant_Product_List:[]
+		Redundant_Product_List:JSON.parse(JSON.stringify(planet.Stock_List))
+	}
+
+	var product_list = [];
+
+	for (let p of ret.Redundant_Product_List){
+		product_list.push(p.Product_Type)
+	}
+
+	for(let formula of state.FOL){
+		if(isAppliable(formula,product_list,state)){
+			console.log("isAppliable==TRUE; formula=",formula)
+			console.log("isAppliable==TRUE; product_list=",product_list)
+		}
 	}
 
 	/*for(let product of planet.Stock_List){
@@ -173,6 +192,23 @@ function calculateShortAndRedundantProductList(state,planet){
 
 function consume(resource){
 	
+}
+
+function isAppliable(formula, product_list,state){
+	return isAppliable_Target(formula,state) && isAppliable_RowMaterial(formula, product_list)
+}
+
+function isAppliable_Target(formula,state){
+	return state.FPC_T2L[formula.TargetID]===PRODUCT_LEVEL_2
+		|| state.FPC_T2L[formula.TargetID]===PRODUCT_LEVEL_3
+		|| state.FPC_T2L[formula.TargetID]===PRODUCT_LEVEL_4
+}
+
+function isAppliable_RowMaterial(formula, product_list){
+	return (formula.RawMaterialID_1===PRODUCT_TYPE_NA || product_list.indexOf(formula.RawMaterialID_1)>=0)
+		&& (formula.RawMaterialID_2===PRODUCT_TYPE_NA || product_list.indexOf(formula.RawMaterialID_2)>=0)
+		&& (formula.RawMaterialID_3===PRODUCT_TYPE_NA || product_list.indexOf(formula.RawMaterialID_3)>=0)
+		&& (formula.RawMaterialID_4===PRODUCT_TYPE_NA || product_list.indexOf(formula.RawMaterialID_4)>=0)
 }
 
 export default (state = default_state,action)=>{
@@ -195,6 +231,7 @@ export default (state = default_state,action)=>{
 	if(action.type === ACT_INIT_FULL_PRODUCT_CATALOGUE){
 		var new_state = JSON.parse(JSON.stringify(state))
 		var full_product_catalogue = {};
+		var full_product_catalogue_type_2_level = {};
 
 		for(let i=0; i<action.product_catalogue.length; i++)
 		{
@@ -202,8 +239,10 @@ export default (state = default_state,action)=>{
 				Product_Type:action.product_catalogue[i].ProductType,
 				Product_Level:action.product_catalogue[i].ProductLevel
 			}
+			full_product_catalogue_type_2_level[action.product_catalogue[i].ProductType]=action.product_catalogue[i].ProductLevel
 		}
 		new_state.FPC = full_product_catalogue
+		new_state.FPC_T2L = full_product_catalogue_type_2_level
 		return new_state;
 	}
 
@@ -219,14 +258,14 @@ export default (state = default_state,action)=>{
 		new_state.RTD[action.charactor_index].Planet_List[action.planet_index].Stock_List_Named=rebuildNamedStockList(action.product_stock_list)
 		updateLocalProductCatalogue(new_state)
 		recalculateShortAndRedundantProductList(new_state)
-		recalculatePlanetLaunchpadOccupied(new_state)		
+		recalculatePlanetLaunchpadOccupied(new_state)
 		return new_state
 
 	}
 
 	if(action.type === ACT_INIT_FORMULA_LIST){
-		var new_state = JSON.parse(JSON.stringify(state))		
-		new_state.FOL = action.formula_list		
+		var new_state = JSON.parse(JSON.stringify(state))
+		new_state.FOL = action.formula_list
 		return new_state
 	}
 
