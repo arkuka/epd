@@ -255,7 +255,8 @@ class PlanetTable extends Component{
 				if(item_name !== null && item_qty !== null){
 					planet_stock_list.push({
 						Product_Name:	item_name[0].trim(),
-						Product_Qty:	item_qty[0].trim()
+						Product_Qty:	item_qty[0].trim(),
+						Product_Type: 	store.getState().FPC[item_name[0].trim()].Product_Type
 					})
 				}
 			})
@@ -303,7 +304,7 @@ class PlanetTable extends Component{
 			title:'Planet'	,
 			dataIndex: 'Planet_ID',
 			className: CLASSNAME_SUB_TABLE_PRODUCT_CELL,
-			onCell:(planet_record, planet_rowIndex)=>{				
+			onCell:(planet_record, planet_rowIndex)=>{
 				return {					
 					className:'sub-table-planet-cell-'+planet_record.Launchpad_Occupy_Percentage,
 					onKey: event=>{console.log('subtable.onkey')},
@@ -418,7 +419,7 @@ class PlanetTable extends Component{
 
 		// add hot key function here
 		for(let i=1; i<this.m_Columns_Charactor_List.length; i++){
-			this.m_Columns_Charactor_List[i].onCell = (planet_record, planet_rowIndex)=>{				
+			this.m_Columns_Charactor_List[i].onCell = (planet_record, planet_rowIndex)=>{
 						return {
 							tabIndex: "0",
 							onKeyDown: this.handleSubTableKeyDown,
